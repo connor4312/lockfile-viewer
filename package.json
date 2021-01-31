@@ -1,0 +1,73 @@
+{
+  "name": "lockfile-viewer",
+  "displayName": "Lockfile Viewer",
+  "description": "Viewer for package-lock.json and yarn.lock files",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.52.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCustomEditor:lockfileViewer.viewer"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "customEditors": [
+      {
+        "viewType": "lockfileViewer.viewer",
+        "displayName": "Lockfile Viewer",
+        "selector": [
+          {
+            "filenamePattern": "package-lock.json"
+          },
+          {
+            "filenamePattern": "yarn.lock"
+          }
+        ]
+      }
+    ]
+  },
+  "prettier": {
+    "printWidth": 100,
+    "arrowParens": "avoid",
+    "singleQuote": true,
+    "trailingComma": "all"
+  },
+  "scripts": {
+    "vscode:prepublish": "yarn run compile",
+    "compile": "npm-run-all --parallel compile:*",
+    "compile:ext": "esbuild src/extension.ts --bundle --tsconfig=tsconfig.json --outfile=dist/extension.js --external:vscode --format=cjs --platform=node --minify",
+    "compile:webview": "esbuild src/webview.tsx --bundle --tsconfig=tsconfig.json --outfile=dist/webview.js --format=iife --minify",
+    "watch": "chokidar \"src/**/*.{ts,tsx}\" -c \"esbuild src/extension.ts --bundle --tsconfig=tsconfig.json --outfile=dist/extension.js --external:vscode --format=cjs --platform=node --sourcemap && esbuild src/webview.tsx --bundle --tsconfig=tsconfig.json --outfile=dist/webview.js --format=iife --sourcemap\"",
+    "lint": "eslint src --ext ts",
+    "test": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/d3-scale-chromatic": "^2.0.0",
+    "@types/glob": "^7.1.3",
+    "@types/semver": "^7.3.4",
+    "@types/vscode": "^1.52.0",
+    "@typescript-eslint/eslint-plugin": "^4.9.0",
+    "@typescript-eslint/parser": "^4.9.0",
+    "chokidar-cli": "^2.1.0",
+    "esbuild": "^0.8.36",
+    "eslint": "^7.15.0",
+    "eslint-plugin-react": "^7.22.0",
+    "graphology-types": "^0.19.2",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.2.1",
+    "typescript": "^4.1.2"
+  },
+  "dependencies": {
+    "colorbrewer": "^1.4.0",
+    "d3-scale-chromatic": "^2.0.0",
+    "graphology": "^0.19.3",
+    "graphology-layout-forceatlas2": "^0.6.0",
+    "preact": "^10.5.12",
+    "semver": "^7.3.4",
+    "sigma": "^2.0.0-alpha40",
+    "vscode-webview-tools": "^0.1.1"
+  }
+}
